@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
@@ -14,6 +14,9 @@ naming_convention = {
 # 다른 모듈(블루프린트 등)에 사용하기 위해 전역변수로 생성
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention)) # 이름을 정의해야 error x(버그패치)
 migrate = Migrate()
+
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 def create_app():
     app = Flask(__name__)
@@ -43,4 +46,7 @@ def create_app():
     # n12br: 줄바꿈 문자를 <br>로 바꿔줌(기존 줄바꿈: 스페이스 연속 2번)
     # fenced_code: 코드 표시 기능
 
+    # 오류페이지
+    app.register_error_handler(404, page_not_found)
+    
     return app
