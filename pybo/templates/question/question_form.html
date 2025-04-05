@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- 질문 등록 -->
+<div class="container">
+  <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+  <form method="post" class="my-3">
+    {{ form.csrf_token }}
+  <!-- form 태그에 action 속성을 지정하지 않으면 현재 페이지의 url이 디폴트 action으로 설정됨 -->
+    <!-- 오류표시 Start -->
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for field, errors in form.errors.items() %} <!-- field와 error를 가져옴 -->
+      <strong>{{ form[field].label }}</strong> <!-- 해당 필드의 label을 가져옴 -->
+      <ul>
+        {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <!-- 오류표시 end -->
+    <div class="mb-3">
+      <label for="subject">제목</label>
+      <input type="text" class="form-control" name="subject" id="subject"
+        value="{{ form.subject.data or '' }}">
+    </div>
+    <div class="mb-3">
+      <label for="content">내용</label>
+      <textarea class="form-control" name="content" id="content" rows="10">
+        {{ form.content.data or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">저장하기</button>
+  </form>
+</div>
+{% endblock %}
+
+<!-- label 태그는 입력 필드와 연결되어 클릭하면 입력 필드가 활성화됨
+     label 태그의 for 속성과 동일한 id 속성을 가진 입력 필드(ex. input, textarea)에 연결됨
+     name은 폼 데이터를 서버로 전송할 때 사용됨 -->
+<!-- class="form-control"을 추가하여 form이 html을 자동으로 생성하는 것을 막고, 부트스트랩을 적용함 -->
+
+<!-- form.validate_on_submit()이 false이면 form.errors에 오류 내용이 자동 등록됨 -->

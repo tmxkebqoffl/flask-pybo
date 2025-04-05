@@ -1,0 +1,24 @@
+<!-- 답변 수정 -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <h5 class="my-3 border-bottom pb-2">답변 수정</h5>
+  <form method="post">
+    {{ form.csrf_token }}
+    {% include "form_errors.html" %}
+    <div class="mb-3">
+      <label for="content">답변내용</label>
+      <textarea class="form-control" name="content" id="content" 
+        row="10">{{ form.content.data or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">저장하기</button>
+  </form>
+</div>
+{% endblock %}
+
+<!-- label 태그는 입력 필드와 연결되어 클릭하면 입력 필드가 활성화됨
+     label 태그의 for 속성과 동일한 id 속성을 가진 입력 필드(ex. input, textarea)에 연결됨
+     name은 폼 데이터를 서버로 전송할 때 사용됨 -->
+<!-- class="form-control"을 추가하여 form이 html을 자동으로 생성하는 것을 막고, 부트스트랩을 적용함 -->
+
+<!-- form.validate_on_submit()이 false이면 form.errors에 오류 내용이 자동 등록됨 -->
